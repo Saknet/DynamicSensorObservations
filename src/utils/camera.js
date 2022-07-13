@@ -3,10 +3,10 @@ const Cesium = require( 'cesium/Cesium' );
 // Public function for initializing the viewport
 function initializeViewPort ( viewer, longitude, latitude ) {
     // Starting location, centered around Helsinki, in WGS84 degrees
-    var west = 24.86;
-    var south = 60.14;
-    var east = 24.99;
-    var north = 60.19;
+    var west = 24.90;
+    var south = 60.18;
+    var east = 25.03;
+    var north = 60.23;
     var rectangle = Cesium.Rectangle.fromDegrees( west, south, east, north );
 
     Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;

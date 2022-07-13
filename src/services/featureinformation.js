@@ -1,11 +1,6 @@
 const chartsService = require( './chart' );
 const $ = require( 'jquery' );
 
-function sortByObservationTimes( s ) {
-    var b = s.split(/\D+/);
-    return new Date(b[2], b[1]-1, b[0]);
-  }
-
 /**
  * Generates tables containing feature information and if found observation results
  *
@@ -19,21 +14,14 @@ function sortByObservationTimes( s ) {
         return a.properties.day.localeCompare( b.properties.day );
     });
 
-    console.log("observationdata", features);
-
     let sortedObservations = [];
 
     let startDay = new Date( startTime.getFullYear(), startTime.getMonth(), startTime.getDate() );
     let endDay = new Date( endTime.getFullYear(), endTime.getMonth(), endTime.getDate() );
 
-    console.log( "startDay", startDay );
-    console.log( "endDay", endDay );
-
-
     for ( let i = 0, len = features.length; i < len; i++ ) {
 
         let feature = features[ i ].properties;
-
 
         const [ y, m, d ] = feature.day.split('-');
 
@@ -47,20 +35,11 @@ function sortByObservationTimes( s ) {
 
                     let timeseries = feature.timeseries[ j ];
 
-                    console.log( "j", j );
-
                     for ( let k = 0, len = sortedObservations.length; k < len; k++ ) {
 
-                        console.log( "k", k );
-
                         if ( timeseries.uom === sortedObservations[ k ].uom ) {
-                            console.log( "sortedObservations", sortedObservations );
-
 
                             sortedObservations[ k ].sums = sortedObservations[ k ].sums.concat( timeseries.sums );
-
-                            console.log( "sortedObservations", sortedObservations );
-
                             sortedObservations[ k ].averages = sortedObservations[ k ].averages.concat( timeseries.averages );
                             sortedObservations[ k ].observationtimes = sortedObservations[ k ].observationtimes.concat( timeseries.observationtimes );
 
@@ -72,18 +51,107 @@ function sortByObservationTimes( s ) {
 
             } else {
 
-                sortedObservations = features[ i ].properties.timeseries ;
-
+                sortedObservations = feature.timeseries;
 
             }
 
         }
 
-        console.log("sortedObservations", sortedObservations);
-
     }
 
-    return sortedObservations;
+    return fixStartAndEndTimes( sortedObservations, startTime, endTime );
+
+}
+
+/**
+ * Generates tables containing feature information and if found observation results
+ *
+ * @param { object } featureData the data of the feature
+ * @param { object } features possibile observation data of the feature
+ * @param { number } requestStarted only used for measuring performance
+ */
+ function fixStartAndEndTimes( timeseries, startTime, endTime  ) {
+
+    timeseries = fixStartTime( timeseries, startTime );
+    timeseries = fixEndTime( timeseries, endTime );
+
+    return timeseries;
+
+}
+
+/**
+ * Generates tables containing feature information and if found observation results
+ *
+ * @param { object } featureData the data of the feature
+ * @param { object } features possibile observation data of the feature
+ * @param { number } requestStarted only used for measuring performance
+ */
+ function fixStartTime( timeseries, startTime ) {
+
+    for ( let i = 0, len = timeseries.length; i < len; i++ ) {
+
+
+        for ( let j = 0, len = timeseries[ i ].observationtimes.length; j < len; j++ ) {
+            const [ waste, time ] = timeseries[ i ].observationtimes[ j ].split(',');
+
+            const [ hours, minutes, seconds ] = time.split(':');
+
+
+            let datetime = new Date( startTime.getFullYear(), startTime.getMonth(), startTime.getDate(), Number( hours ), Number( minutes ),  Number( seconds ) );
+        
+            if ( datetime >= startTime ) {
+
+                timeseries[ i ].observationtimes = timeseries[ i ].observationtimes.slice( j );
+                timeseries[ i ].sums = timeseries[ i ].sums.slice( j );
+                timeseries[ i ].averages = timeseries[ i ].averages.slice( j );
+                break;
+
+            }
+
+
+        }
+    }
+
+
+    return timeseries;
+
+}
+
+/**
+ * Generates tables containing feature information and if found observation results
+ *
+ * @param { object } featureData the data of the feature
+ * @param { object } features possibile observation data of the feature
+ * @param { number } requestStarted only used for measuring performance
+ */
+ function fixEndTime( timeseries, endTime ) {
+
+    for ( let i = 0, len = timeseries.length; i < len; i++ ) {
+
+
+        for ( let j = timeseries[ i ].observationtimes.length - 1; j >= 0; j-- ) {
+            const [ waste, time ] = timeseries[ i ].observationtimes[ j ].split(',');
+
+            const [ hours, minutes, seconds ] = time.split(':');
+
+
+            let datetime = new Date( endTime.getFullYear(), endTime.getMonth(), endTime.getDate(), Number( hours ), Number( minutes ),  Number( seconds ) );
+        
+            if ( datetime <= endTime ) {
+
+                timeseries[ i ].observationtimes = timeseries[ i ].observationtimes.slice( 0, j + 1 );
+                timeseries[ i ].sums = timeseries[ i ].sums.slice( 0, j + 1 );
+                timeseries[ i ].averages = timeseries[ i ].averages.slice( 0, j + 1 );
+                break;
+
+            }
+
+
+        }
+    }
+
+
+    return timeseries;
 
 }
 
@@ -96,8 +164,6 @@ function sortByObservationTimes( s ) {
  * @param { number } requestStarted only used for measuring performance
  */
 function generateTables ( featureData, observationData, requestStarted, startTime, endTime  ) {
-
-    console.log( "observationdata", observationData );
 
     let sortedObservations = sortObservations( observationData, startTime, endTime  )
 

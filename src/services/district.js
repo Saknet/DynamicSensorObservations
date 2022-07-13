@@ -46,7 +46,7 @@ function addCityDistricts () {
         el.value = citydistrict;
         districtselect.appendChild( el );
 
-        if ( citydistrict === 'Sörnäinen' ) {
+        if ( citydistrict === 'Viikki' ) {
 
             districtselect.options.selectedIndex = i;
 

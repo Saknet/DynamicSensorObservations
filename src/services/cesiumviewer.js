@@ -8,7 +8,7 @@ const utils = require( '../utils/camera' );
  function initializeCesium () {
 
     let viewer = createViewr ();
-    activateTileset( 24.976, 60.1845, 'https://kartta.hel.fi/3d/datasource-data/e9cfc1bb-a015-4a73-b741-7535504c61bb/tileset.json', viewer );
+    activateTileset( 25.015753, 60.224638, 'https://kartta.hel.fi/3d/datasource-data/e9cfc1bb-a015-4a73-b741-7535504c61bb/tileset.json', viewer );
     return viewer;
 
 }
