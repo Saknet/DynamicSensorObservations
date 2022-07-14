@@ -53,52 +53,6 @@ function generateObservationChart ( observationData, address ) {
 }
 
 /**
- * Creates chart with Plotly for feature information data found in tileset
- *
- * @param { Object } featureData feature information data from tileset
- */
-function generateFeatureDataTable ( featureData ) {
-
-    const values = [
-        featureData[ 0 ],
-        featureData[ 1 ]
-    ];
-
-    const data = [ {
-        type: 'table',
-        header: {
-            values: [['<b>Attribute</b>'], ['<b>Value</b>']],
-            align: 'center',
-            line: { width: 1, color: '#506784' },
-            fill: { color: '#119DFF' },
-            font: { family: 'Arial', size: 10, color: 'white' }
-        },
-        cells: {
-            values: values,
-            align: ['left', 'center'],
-            line: { color: '#506784', width: 1 },
-            fill: { color: ['#25FEFD', 'white'] },
-            font: { family: 'Arial', size: 9, color: ['#506784'] }
-        }
-    }];
-
-    const layout = {
-
-        title: 'Feature',
-        font: {
-            size: 10
-        },
-        margin: {
-            b: 20,
-            t: 40
-        }
-    };
-
-    Plotly.newPlot( 'featureInfo', data, layout );
-
-}
-
-/**
  * Adds observation data to Plotly chart
  *
  * @param { Array<Object> } plotlyData data gathered for plotly
@@ -126,7 +80,6 @@ function addObservationDataToChart ( plotlyData, data, unit ) {
 function purgeAllCharts () {
 
     Plotly.purge( 'obsChart' );
-    Plotly.purge( 'featureInfo' );
     Plotly.purge( 'things' );
 
 }
@@ -188,7 +141,6 @@ function purgeAllCharts () {
 
 module.exports = {
     generateObservationChart,
-    generateFeatureDataTable,
     generateThingTable,
     addObservationDataToChart,
     purgeAllCharts,

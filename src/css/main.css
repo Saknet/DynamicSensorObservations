@@ -6,14 +6,6 @@ html, body, #cesiumContainer {
 	overflow: hidden;
 }
 
-#obsChart {
-	float: left;
-}
-
-#obsChart {
-	float: right;
-}
-
 #searchcontainer {
 	position: relative;
 }
@@ -28,10 +20,3 @@ html, body, #cesiumContainer {
 	right: 0;
 	background-color: #ffffff;
 }
-
-.plotly {
-	display: flex;
-  }
-  .plotly.charts {  
-	justify-content: space-between;
-  }

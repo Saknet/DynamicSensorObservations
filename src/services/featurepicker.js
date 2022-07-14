@@ -1,6 +1,6 @@
 const Cesium = require( 'cesium/Cesium' );
 const apiController = require( '../controllers/api' );
-const featureInformationService = require( '../services/featureinformation' );
+const featureInformationService = require( './observations' );
 const chartsService = require( './chart' );
 const thingService = require( '../services/thing' );
 const $ = require( 'jquery' );
@@ -217,13 +217,11 @@ async function fetchObservationData ( llcoordinates ) {
     const bbox = boundingbox.createBoundingBoxForCoordinates( longitude, latitude  );
 
     apiController.getDataFromAPI( 'https://geo.fvh.fi/timeseries/collections/hki_sensor_observations/items?f=json&limit=366&bbox=' + bbox ).then(
-        observationData => featureInformationService.generateTables( savedFeature, observationData.features, requestStarted, startTime, endTime ) ).catch(
+        observationData => featureInformationService.generateTable( savedFeature, observationData.features, requestStarted, startTime, endTime ) ).catch(
         ( e ) => {
 
             console.log( 'something went wrong', e );
             console.log( 'timespent ', new Date( Date.now() ) - requestStarted, ' ms' );
-            const filteredData = featureInformationService.filterFeatureData( feature );
-            chartsService.generateFeatureDataTable( filteredData );
 
         }
     );
