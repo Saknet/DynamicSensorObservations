@@ -2,37 +2,13 @@ const Cesium = require( 'cesium/Cesium' );
 const apiController = require( '../controllers/api' );
 const featureInformationService = require( './observations' );
 const chartsService = require( './chart' );
-const thingService = require( '../services/thing' );
 const $ = require( 'jquery' );
-const thingsSwitch = document.getElementById( 'thingsSwitchCheck' );
 const boundingbox = require( '../utils/boundingbox' );
 
 var Pickers_3DTile_Activated = true;
 var startTime = new Date( 2022, 5, 1 );
 var endTime = new Date( 2022, 5, 30 );
 var feature = null;
-var displayThings = false;
-
-thingsSwitch.addEventListener( 'change', function() {
-
-    if ( this.checked ) {
-
-        displayThings = true;
-
-        if ( feature && feature.latitude && feature.longitude ) {
-
-            thingService.displayThingsWithinFeature( feature.longitude, feature.latitude );
-
-        }
-
-    } else {
-
-        displayThings = false;
-        chartsService.purgeThings();
-
-    }
-
-});
 
 /**
  * Updates times needed for retrieving observations data when user changes dates with datepicker.
@@ -201,13 +177,7 @@ async function fetchObservationData ( llcoordinates ) {
 
         }
 
-    }
-
-    if ( displayThings ) {
-
-        thingService.displayThingsWithinFeature( longitude, latitude );
-
-    }    
+    }   
 
     const requestStarted = new Date( Date.now() );
     let savedFeature = feature;
