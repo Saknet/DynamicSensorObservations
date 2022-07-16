@@ -1,5 +1,5 @@
 {
-  "name": "SensorObservationFrontend",
+  "name": "DynamicSensorObservations",
   "version": "1.0.0",
   "description": "Cesium UI for displaying dynamic Sensor Observation data to Helsinki City 3D model",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Saknet/SensorObservationFrontend.git"
+    "url": "https://github.com/Saknet/DynamicSensorObservations.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Saknet/SensorObservationFrontend/issues"
+    "url": "https://github.com/Saknet/DynamicSensorObservations/issues"
   },
-  "homepage": "https://github.com/Saknet/SensorObservationFrontend#readme",
+  "homepage": "https://github.com/Saknet/DynamicSensorObservations#readme",
   "devDependencies": {
     "cesium": "^1.83.0",
     "copy-webpack-plugin": "^9.0.1",
