@@ -6,8 +6,8 @@ const $ = require( 'jquery' );
 const boundingbox = require( '../utils/boundingbox' );
 
 var Pickers_3DTile_Activated = true;
-var startTime = new Date( 2022, 5, 1 );
-var endTime = new Date( 2022, 5, 30 );
+var startTime = new Date( new Date().getFullYear(), 0, 1 );
+var endTime = new Date( new Date().setDate( new Date().getDate() - 1 ) );
 var feature = null;
 
 /**
