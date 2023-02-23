@@ -18,7 +18,7 @@ function initializeDatepicker () {
         $( 'input[name="datetimes"]' ).daterangepicker( {
 
             timePicker: true,
-            startDate: new Date( currentYear, 0, 1 ),
+            startDate: new Date( currentYear - 1, 0, 1 ),
             endDate: yesterday,
             minDate: new Date( currentYear - 1, 0, 1 ),
             maxDate: yesterday,
