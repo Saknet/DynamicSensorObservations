@@ -20,7 +20,7 @@ function initializeDatepicker () {
             timePicker: true,
             startDate: new Date( currentYear, 0, 1 ),
             endDate: yesterday,
-            minDate: new Date( currentYear, 0, 1 ),
+            minDate: new Date( currentYear - 1, 0, 1 ),
             maxDate: yesterday,
             locale: {
                 format: 'DD.M.Y HH:mm'
